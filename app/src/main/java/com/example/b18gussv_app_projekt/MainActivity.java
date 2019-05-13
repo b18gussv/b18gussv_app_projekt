@@ -12,9 +12,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.content.Intent;
+import android.support.annotation.NonNull;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    public static String EXTRA_MESSAGE = "DONK";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,9 +79,17 @@ public class MainActivity extends AppCompatActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+
+        if (id == R.id.about) {
+            Intent i = new Intent(MainActivity.this, About.class);
+            startActivity(i);
+        } else if(id == R.id.list){
+            Intent a = new Intent(MainActivity.this, MainActivity.class);
+            startActivity(a);
+        }
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
