@@ -36,7 +36,10 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private ArrayList<Player> playerArrayList=new ArrayList<>();
-    public static String EXTRA_MESSAGE = "DONK";
+
+    private ListView my_listview;
+    private DrawerLayout drawer;
+    private ActionBarDrawerToggle toggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +47,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        ArrayAdapter<Player> adapter=new ArrayAdapter<>(this,R.layout.list_item_textview,R.id.list_item_textview,playerArrayList);
-        final ListView my_listview=(ListView) findViewById(R.id.list_item_textview);
+       ArrayAdapter<Player> adapter=new ArrayAdapter<>(this,R.layout.list_item_textview,R.id.list_item_textview,playerArrayList);
+        /*final*/ my_listview=(ListView) findViewById(R.id.list_item_textview);
         my_listview.setAdapter(adapter);
         my_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -55,15 +58,27 @@ public class MainActivity extends AppCompatActivity
         });
         new FetchData().execute();
 
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        toggle.setToolbarNavigationClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawer.openDrawer(GravityCompat.START);
+            }
+        });
+
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        toggle.syncState();
     }
 
     @Override
@@ -85,6 +100,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+        Log.d("klick0", "onOptionsItemSelected: ");
         if (id == R.id.action_settings) {
             return true;
         }
@@ -96,9 +112,10 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-
+        Log.d("klick", "onNavigationItemSelected: ");
         if (id == R.id.about) {
             Intent i = new Intent(MainActivity.this, About.class);
+           // my_listview.setVisibility(View.GONE);
             startActivity(i);
         } else if(id == R.id.list){
             Intent a = new Intent(MainActivity.this, MainActivity.class);
@@ -186,6 +203,7 @@ public class MainActivity extends AppCompatActivity
 
 
         }
+
 
     }
 }

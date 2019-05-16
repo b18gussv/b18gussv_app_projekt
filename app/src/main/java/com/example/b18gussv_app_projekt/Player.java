@@ -33,7 +33,7 @@ public class Player {
 
         public String info(){
             String tmp=new String();
-            tmp+="Namn: "+name+"\nLängd: "+location+"m"+"\nPPG 18-19: "+height+"\nLag: "+company+"\nPosition: "+category+"\nLön: "+cost+"miljoner USD";
+            tmp+="Namn: "+name+"\nLängd: "+location+"m"+"\nPPG: "+height+"\nLag: "+company+"\nPosition: "+category+"\nLön: "+cost+"miljoner USD";
             return tmp;
         }
 
